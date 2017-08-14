@@ -236,7 +236,7 @@
             padding-right: .2rem;
             color: #9299a7;
             line-height: 1.5;
-            height: 1.4rem;
+            height: 1.3rem;
             overflow: hidden;
             text-overflow: ellipsis;
             display: -webkit-box;
