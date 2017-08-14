@@ -17,7 +17,7 @@
       <ul class="cases">
         <li v-for="item in lists" @click.stop="selectItem(item.caseId)"  class="item">
           <div class="case-state">
-            <div class="state" :calss="{'active': item.rateType === 2}"></div>
+            <div class="state" :class="{'active': item.rateType === 2}"></div>
           </div>
           <div class="case-name">
             {{item.message}}
@@ -232,7 +232,8 @@
             }
           }
           .case-name {
-            font-size: .5rem;
+            font-size: .45rem;
+            padding-right: .2rem;
             color: #9299a7;
             line-height: 1.5;
             height: 1.4rem;
