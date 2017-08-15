@@ -1,5 +1,5 @@
 <template>
-  <div class="detail" v-show="showDetail">
+  <div class="detail">
     <div class="header-wrap">
       <div class="back" @click="goBack">
       </div>
@@ -12,7 +12,7 @@
         <table>
           <tr>
             <td width="30%">警情编号</td>
-            <td width="70%">J4201146200002017070026</td>
+            <td width="70%">{{caseData.caseId}}</td>
           </tr>
           <tr>
             <td>警情名称</td>
@@ -46,23 +46,19 @@
   import BScroll from 'better-scroll'
   import { formatDate } from '../../assets/js/date'
   export default {
-    props: {
-      caseData: {},
-      showDetail: {
-        type: Boolean,
-        default: false
+    computed: {
+      caseData () {
+        return this.$store.state.caseData
       }
     },
-    watch: {
-      showDetail () {
-        this.$nextTick(() => {
-          this._initScroll()
-        })
-      }
+    created () {
+      this.$nextTick(() => {
+        this._initScroll()
+      })
     },
     methods: {
       goBack () {
-        this.$emit('show-detail', this.showDetail)
+        this.$router.back()
       },
       _initScroll () {
         this.caseScroll = new BScroll(this.$refs.detailWrap, {

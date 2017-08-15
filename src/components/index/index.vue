@@ -10,16 +10,15 @@
       </dl>
     </div>
     <ul class="bts">
-      <li @click="goIndex(1,'预警信息')">
+      <li @click="goIndex(1)">
         <img src="./index_icon_yujing.png" alt="">
         <div class="btn">预警信息</div>
       </li>
-      <li @click="goIndex(2,'执法问题')">
+      <li @click="goIndex(2)">
         <img src="./index_icon_wenti.png" alt="">
         <div class="btn">执法问题</div>
       </li>
     </ul>
-    <router-view></router-view>
   </div>
 </template>
 
@@ -32,15 +31,15 @@
         message: {}
       }
     },
+    created () {
+      this._getMessage()
+    },
     methods: {
-      goIndex (n, msg) {
+      goIndex (n) {
         this.$router.push({
-          name: 'List',
-          params: {
-            id: n,
-            msg: msg
-          }
+          name: 'List'
         })
+        this.$store.commit('selectType', n)
       },
       _getMessage () {
         getMessage().then((res) => {
@@ -49,9 +48,6 @@
           }
         })
       }
-    },
-    created () {
-      this._getMessage()
     }
   }
 </script>

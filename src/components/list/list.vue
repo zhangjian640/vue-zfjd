@@ -2,7 +2,7 @@
   <div class="index">
     <div class="title-wrap">
       <div class="back" @click.stop="goBack"></div>
-      <div class="title">{{this.$route.params.msg}}</div>
+      <div class="title">{{title}}</div>
     </div>
     <div class="user-wrap">
       <div class="avatar">
@@ -25,8 +25,17 @@
         </li>
       </ul>
     </div>
-    <ratingselect @select-type="onSelectType" :selectType="selectType" :desc="desc" :lists="lists"></ratingselect>
-    <detail @show-detail="onShowDetail" :showDetail="showDetail" :caseData="caseData"></detail>
+    <ul class="bts">
+      <li class="warning" @click="select(1)" :class="{'active':selectType === 1}">
+        <div class="block"></div>
+        <div class="btn">{{desc.warning}}</div>
+      </li>
+      <li class="problem" @click.stop="select(2)" :class="{'active':selectType === 2}">
+        <div class="block"></div>
+        <div class="btn">{{desc.problem}}</div>
+      </li>
+    </ul>
+    <!--<detail @show-detail="onShowDetail" :showDetail="showDetail" :caseData="caseData"></detail>-->
     <loading v-show="!lists.length"></loading>
   </div>
 </template>
@@ -34,26 +43,34 @@
 <script type="text/ecmascript-6">
   import BScroll from 'better-scroll'
   import { getMessage } from 'api/case'
-  import ratingselect from '../ratingselect/ratingselect'
-  import Detail from '@/components/detail/detail'
   import Loading from '@/common/loading/loading'
   const ERR_OK = 0
   export default {
     data () {
       return {
         message: {},
-        selectType: '',
         lists: [],
         desc: {
           warning: '预警信息',
           problem: '执法问题'
         },
-        showDetail: false,
         caseData: {}
       }
     },
     created () {
-      this._getMessage(this.$route.params.id)
+      this._getMessage(this.$store.state.type)
+    },
+    computed: {
+      title () {
+        if (this.$store.state.type === 1) {
+          return this.desc.warning
+        } else if (this.$store.state.type === 2) {
+          return this.desc.problem
+        }
+      },
+      selectType () {
+        return this.$store.state.type
+      }
     },
     methods: {
       selectItem (id) {
@@ -62,24 +79,26 @@
             this.caseData = this.lists[x]
           }
         }
-        this.showDetail = true
+        // 跳转至详情页
+        this.$router.push({
+          name: 'Detail'
+        })
+        // 改变案件信息id
+        this.$store.commit('changeCaseData', this.caseData)
       },
       goBack () {
         this.$router.back()
       },
-      onSelectType (type) {
-        this.selectType = type
+      select (type) {
         this.lists = []
+        this.$store.commit('selectType', type)
         this._getMessage(type)
         this.$nextTick(() => {
-          this.caseScroll.refresh()
+          this.refresh()
         })
       },
-      onShowDetail (type) {
-        this.showDetail = !type
-      },
+      // 获取数据
       _getMessage (type) {
-        this.selectType = type
         getMessage().then((res) => {
           if (res.errno === ERR_OK) {
             this.message = res.data
@@ -90,6 +109,7 @@
           }
         })
       },
+      // 提取数据的数组
       _getMessageList (type) {
         for (var x in this.message.messageList) {
           if (type === this.message.messageList[x].rateType) {
@@ -115,8 +135,6 @@
       }
     },
     components: {
-      ratingselect,
-      Detail,
       Loading
     }
   }
@@ -244,6 +262,66 @@
             -webkit-box-orient: vertical;
           }
         }
+      }
+    }
+    .bts {
+      width: 100%;
+      height: 1.77rem;
+      position: fixed;
+      bottom: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-top: 1px solid #cacaca;
+      background: #fff;
+      li {
+        flex: 1;
+        height: 100%;
+        color: #808080;
+        text-align: center;
+        .block {
+          width: .63rem;
+          height: .72rem;
+          margin: .2rem auto 0;
+
+        }
+        .btn {
+          font-weight: 200;
+          padding-top: .2rem;
+          font-size: .3rem;
+        }
+        &.warning {
+          border-right: 1px solid #c2c2c2;
+          &.active {
+            .btn {
+              color: #1d8add;
+            }
+            .block {
+              background: url(./liebiao_icon_yujing_hover.png) no-repeat;
+              background-size: 100%;
+            }
+          }
+          .block {
+            background: url(./liebiao_icon_yujing.png) no-repeat;
+            background-size: 100%;
+          }
+        }
+        &.problem {
+          &.active {
+            .btn {
+              color: #1d8add;
+            }
+            .block {
+              background: url(./liebiao_icon_anqing_hover.png) no-repeat;
+              background-size: 100%;
+            }
+          }
+          .block {
+            background: url(./liebiao_icon_anqing.png) no-repeat;
+            background-size: 100%;
+          }
+        }
+
       }
     }
   }

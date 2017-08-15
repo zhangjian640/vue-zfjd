@@ -6,10 +6,27 @@ import routes from './router'
 import Router from 'vue-router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import Vuex from 'Vuex'
 
 Vue.use(VueAxios, axios)
 
 Vue.use(Router)
+Vue.use(Vuex)
+
+const store = new Vuex.Store({
+  state: {
+    type: 1,
+    caseData: {}
+  },
+  mutations: {
+    selectType (state, type) {
+      state.type = type
+    },
+    changeCaseData (state, data) {
+      state.caseData = data
+    }
+  }
+})
 
 const router = new Router({
   mode: 'history',
@@ -22,6 +39,7 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',
   components: { App }
 })
