@@ -114,6 +114,7 @@
         for (var x in this.message.messageList) {
           if (type === this.message.messageList[x].rateType) {
             this.lists.push(this.message.messageList[x])
+            this.lists.sort(this._timeSort('endTime'))
           }
         }
       },
@@ -125,6 +126,23 @@
       },
       refresh () {
         this.scroll && this.caseScroll.refresh()
+      },
+      // 时间排序
+      _timeSort (name) {
+        return function (o, p) {
+          let a, b
+          if (typeof o === 'object' && typeof p === 'object' && o && p) {
+            a = o[name]
+            b = p[name]
+            if (a === b) {
+              return 0
+            }
+            if (typeof a === typeof b) {
+              return a < b ? 1 : -1
+            }
+            return typeof a < typeof b ? 1 : -1
+          }
+        }
       }
     },
     watch: {
