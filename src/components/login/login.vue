@@ -27,6 +27,7 @@
 .login{
   height: 100vh;
   background: url(./login_bg.jpg) no-repeat;
+  background-size: cover;
   .logo{
     padding-top: 3.45rem;
     text-align: center;

@@ -62,7 +62,7 @@
   .user-wrap {
     width: 100%;
     height: 3.13rem;
-    bottom: 6.3rem;
+    top: 10rem;
     position: absolute;
     .avatar {
       width: 2.3rem;
