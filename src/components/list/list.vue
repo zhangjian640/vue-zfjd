@@ -35,7 +35,6 @@
         <div class="btn">{{desc.problem}}</div>
       </li>
     </ul>
-    <!--<detail @show-detail="onShowDetail" :showDetail="showDetail" :caseData="caseData"></detail>-->
     <loading v-show="!lists.length"></loading>
   </div>
 </template>
