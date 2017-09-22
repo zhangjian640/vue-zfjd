@@ -19,11 +19,6 @@
 </script>
 
 <style scoped lang="less" rel="stylesheet/less">
-  input:-webkit-autofill {
-    background-color: transparent!important;
-    background-image: none;
-    color: #000;
-  }
 .login{
   height: 100vh;
   background: url(./login_bg.jpg) no-repeat;

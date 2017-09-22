@@ -1,4 +1,5 @@
-import Index from '@/components/index/index'
+// import Index from '@/components/index/index'
+import newIndex from '@/components/newIndex/newIndex'
 import List from '@/components/list/list'
 import Detail from '@/components/detail/detail'
 import Login from '@/components/login/login'
@@ -6,8 +7,8 @@ import Login from '@/components/login/login'
 export default [
   {
     path: '/',
-    name: 'Index',
-    component: Index
+    name: 'newIndex',
+    component: newIndex
   },
   {
     path: '/list',

@@ -2,7 +2,7 @@
   <div class="index">
     <div class="user-wrap">
       <div class="avatar">
-        <img src="./index_img.png" alt="">
+        <img src="../newIndex/index_img.png" alt="">
       </div>
       <dl class="user">
         <dt>{{message.userName}}</dt>

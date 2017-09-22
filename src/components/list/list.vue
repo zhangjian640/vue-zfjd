@@ -158,13 +158,6 @@
 </script>
 
 <style scoped lang="less" rel="stylesheet/less">
-  .fade-enter-active, .fade-leave{
-    transition: all 0.4s;
-    transform: translate3D(0,0,0);
-  }
-  .fade-enter, .fade-leave-active{
-    transform: translate3D(0,-100vh,0)
-  }
   .index {
     .title-wrap {
       background: #000;
